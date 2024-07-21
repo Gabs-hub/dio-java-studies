@@ -1,4 +1,6 @@
-use viagens;
+CREATE DATABASE viagens;
+
+USE viagens;
 
 CREATE TABLE usuarios (
   id INT,
@@ -38,13 +40,47 @@ INSERT INTO viagens.reservas (id, id_usuario, id_destino, data, status) VALUES
 (3, 3, 3, '2023-09-20', 'cancelada');
 
 SELECT * FROM usuarios;
-
 SELECT nome, email FROM usuarios;
-
 SELECT * FROM usuarios WHERE nome = 'João Silva';
-
 SELECT * FROM usuarios WHERE data_nascimento > '1990-01-01';
-
 SELECT * FROM usuarios WHERE nome LIKE '%Silva%';
-
 SELECT * FROM usuarios WHERE nome LIKE 'João%';
+
+
+
+INSERT INTO usuarios VALUES (1, 'Arthur', 'arthur@teste.com', '1999-12-12', 'Rua I, Cidade J, Estado I++');
+INSERT INTO destinos VALUES (1, 'Praia do Rosa', 'Uma linda praia');
+
+UPDATE usuarios SET id = 4 WHERE email = 'arthur@teste.com';
+DELETE FROM destinos WHERE nome = 'Praia do Rosa';
+
+
+
+CREATE TABLE usuarios_nova (
+  id INT,
+  nome VARCHAR(255) NOT NULL COMMENT 'Nome do usuário',
+  email VARCHAR(255) NOT NULL UNIQUE COMMENT 'Endereço de e-mail do usuário',
+  data_nascimento DATE NOT NULL COMMENT 'Data de nascimento do usuário',
+  endereco VARCHAR(100) NOT NULL COMMENT 'Endereço do Cliente'
+);
+
+INSERT INTO usuarios_nova SELECT * FROM usuarios;
+DROP TABLE usuarios;
+ALTER TABLE usuarios_nova RENAME usuarios;
+
+ALTER TABLE usuarios MODIFY COLUMN endereco VARCHAR(150);
+
+
+
+ALTER TABLE usuarios MODIFY COLUMN id INT PRIMARY KEY AUTO_INCREMENT;
+ALTER TABLE reservas MODIFY COLUMN id INT PRIMARY KEY AUTO_INCREMENT;
+ALTER TABLE destinos MODIFY COLUMN id INT PRIMARY KEY AUTO_INCREMENT;
+
+ALTER TABLE reservas ADD CONSTRAINT fk_reservas_usuarios FOREIGN KEY(id_usuario) REFERENCES usuarios(id) ON DELETE CASCADE;
+ALTER TABLE reservas ADD CONSTRAINT fk_reservas_destinos FOREIGN KEY(id_destino) REFERENCES destinos(id) ON DELETE CASCADE;
+
+ALTER TABLE reservas ADD CONSTRAINT fk_usuarios FOREIGN KEY(id_usuario) REFERENCES usuarios(id) ON DELETE CASCADE;
+ALTER TABLE reservas DROP CONSTRAINT fk_reservas_usuarios;
+
+DELETE FROM usuarios WHERE id =1;
+SELECT * FROM usuarios;
