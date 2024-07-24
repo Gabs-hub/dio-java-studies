@@ -1,6 +1,5 @@
 package com.example;
 
-import com.google.gson.Gson;
 import com.example.app.ViaCepResponse;
 import com.example.app.ConversorJson;
 import org.springframework.boot.CommandLineRunner;
