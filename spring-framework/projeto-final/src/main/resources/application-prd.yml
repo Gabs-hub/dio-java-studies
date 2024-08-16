@@ -1,0 +1,12 @@
+spring:
+  datasource:
+    url: jdbc:${URL}
+    username: ${USER}
+    password: ${PASSWORD}
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: create # validate | update | create | create-drop
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
